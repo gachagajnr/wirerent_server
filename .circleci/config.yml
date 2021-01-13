@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:7
+    steps:
+      - checkout
+      - run:
+          name: install-dependencies
+          command: npm install
+      # - run:
+      #     name: tests
+          # command: npm test
+      - deploy:
+          name: digital-ocean
+          command: ssh -o "StrictHostKeyChecking no" root@157.245.85.22 "cd ~/var/www/ardenfood.com/html/app; git pull; npm install; forever start app.js"
+
